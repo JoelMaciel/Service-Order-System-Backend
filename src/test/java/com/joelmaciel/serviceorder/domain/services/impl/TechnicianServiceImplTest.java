@@ -132,6 +132,24 @@ class TechnicianServiceImplTest {
         verify(technicianRepository, times(1)).save(updatedTechnician);
     }
 
+    @Test
+    @DisplayName("Given non-existing TechnicianId, When update is called, Then throw TechnicianNotFoundException")
+    void givenNonExistingTechnicianId_whenUpdate_thenThrowTechnicianNotFoundException() {
+        Integer invalidTechnicianId = 100;
+        TechnicianUpdateDTO technicianUpdateDTO = getMockTechnicianUpdateDTO();
+
+        when(technicianRepository.findById(invalidTechnicianId)).thenReturn(Optional.empty());
+
+        TechnicianNotFoundException exception = assertThrows(TechnicianNotFoundException.class, () -> {
+            technicianService.update(invalidTechnicianId, technicianUpdateDTO);
+        });
+
+        assertEquals(TECHNICIAN_NOT_FOUND, exception.getMessage());
+        verify(technicianRepository, times(1)).findById(invalidTechnicianId);
+        verify(technicianRepository, never()).save(any(Technician.class));
+    }
+
+
     private Technician getMockTechnician() {
         return Technician.builder()
                 .id(1)
