@@ -1,5 +1,6 @@
 package com.joelmaciel.serviceorder.domain.services.impl;
 
+import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.entities.Technician;
 import com.joelmaciel.serviceorder.domain.excptions.TechnicianNotFoundException;
@@ -106,6 +107,31 @@ class TechnicianServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("Given existing TechnicianId and valid update data, When update is called, Then return updated TechnicianDTO")
+    void givenExistingTechnicianIdAndValidUpdateData_whenUpdate_thenReturnUpdatedTechnicianDTO() {
+        Integer technicianId = 1;
+        TechnicianUpdateDTO technicianUpdateDTO = getMockTechnicianUpdateDTO();
+        Technician existingTechnician = getMockTechnician();
+        Technician updatedTechnician = existingTechnician.toBuilder()
+                .phoneNumber(technicianUpdateDTO.getPhoneNumber())
+                .build();
+
+        when(technicianRepository.findById(technicianId)).thenReturn(Optional.of(existingTechnician));
+        when(technicianRepository.save(updatedTechnician)).thenReturn(updatedTechnician);
+
+        TechnicianDTO updatedTechnicianDTO = technicianService.update(technicianId, technicianUpdateDTO);
+
+        assertNotNull(updatedTechnicianDTO);
+        assertEquals(updatedTechnician.getId(), updatedTechnicianDTO.getId());
+        assertEquals(updatedTechnician.getName(), updatedTechnicianDTO.getName());
+        assertEquals(updatedTechnician.getCpf(), updatedTechnicianDTO.getCpf());
+        assertEquals(updatedTechnician.getPhoneNumber(), updatedTechnicianDTO.getPhoneNumber());
+
+        verify(technicianRepository, times(1)).findById(technicianId);
+        verify(technicianRepository, times(1)).save(updatedTechnician);
+    }
+
     private Technician getMockTechnician() {
         return Technician.builder()
                 .id(1)
@@ -122,5 +148,9 @@ class TechnicianServiceImplTest {
                 .phoneNumber("(85) 988554452")
                 .build();
     }
-
+    private TechnicianUpdateDTO getMockTechnicianUpdateDTO() {
+        return TechnicianUpdateDTO.builder()
+                .phoneNumber("(85) 987654321")
+                .build();
+    }
 }

@@ -1,5 +1,6 @@
 package com.joelmaciel.serviceorder.domain.services.impl;
 
+import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.entities.Technician;
 import com.joelmaciel.serviceorder.domain.excptions.TechnicianNotFoundException;
@@ -28,6 +29,14 @@ public class TechnicianServiceImpl implements TechnicianService {
     }
 
     @Override
+    @Transactional
+    public TechnicianDTO update(Integer technicianId, TechnicianUpdateDTO technicianUpdateDTO) {
+        Technician technician = findByTechnicianId(technicianId);
+        technician.setPhoneNumber(technicianUpdateDTO.getPhoneNumber());
+        return toDTO(technicianRepository.save(technician));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public TechnicianDTO findById(Integer technicianId) {
         Technician technician = findByTechnicianId(technicianId);
@@ -50,23 +59,3 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .build();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

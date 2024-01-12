@@ -1,5 +1,6 @@
 package com.joelmaciel.serviceorder.domain.services;
 
+import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.entities.Technician;
 
@@ -10,4 +11,6 @@ public interface TechnicianService {
     Technician findByTechnicianId(Integer technicianId);
 
     List<TechnicianDTO> findAll();
+
+    TechnicianDTO update(Integer technicianId, TechnicianUpdateDTO technicianUpdateDTOO);
 }
