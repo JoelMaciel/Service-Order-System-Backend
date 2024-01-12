@@ -9,11 +9,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class TechnicianServiceImpl implements TechnicianService {
 
     private final TechnicianRepository technicianRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TechnicianDTO> findAll() {
+        List<Technician> technicianList = technicianRepository.findAll();
+        return technicianList.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 
     @Override
     @Transactional(readOnly = true)

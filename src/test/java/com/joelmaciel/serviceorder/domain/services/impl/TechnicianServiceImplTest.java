@@ -11,6 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +27,49 @@ class TechnicianServiceImplTest {
     private TechnicianRepository technicianRepository;
     @InjectMocks
     private TechnicianServiceImpl technicianService;
+
+    @Test
+    @DisplayName("Given existing technicians, When findAll is called, Then return list of TechnicianDTOs")
+    void givenExistingTechnicians_whenFindAll_thenReturnListOfTechnicianDTOs() {
+        Technician mockTechnician = getMockTechnician();
+        Technician mockTechnicianTwo = getMockTechnicianTwo();
+
+        List<Technician> technicianList = Arrays.asList(
+                mockTechnician, mockTechnicianTwo
+        );
+
+        when(technicianRepository.findAll()).thenReturn(technicianList);
+
+        List<TechnicianDTO> technicianDTOList = technicianService.findAll();
+
+        assertNotNull(technicianDTOList);
+        assertEquals(technicianList.size(), technicianDTOList.size());
+
+        for (int i = 0; i < technicianList.size(); i++) {
+            TechnicianDTO technicianDTO = technicianDTOList.get(i);
+            Technician technician = technicianList.get(i);
+
+            assertEquals(technician.getId(), technicianDTO.getId());
+            assertEquals(technician.getName(), technicianDTO.getName());
+            assertEquals(technician.getCpf(), technicianDTO.getCpf());
+            assertEquals(technician.getPhoneNumber(), technicianDTO.getPhoneNumber());
+        }
+
+        verify(technicianRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Given no existing technicians, When findAll is called, Then return an empty list")
+    void givenNoExistingTechnicians_whenFindAll_thenReturnEmptyList() {
+        when(technicianRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<TechnicianDTO> technicianDTOList = technicianService.findAll();
+
+        assertNotNull(technicianDTOList);
+        assertTrue(technicianDTOList.isEmpty());
+
+        verify(technicianRepository, times(1)).findAll();
+    }
 
     @Test
     @DisplayName("Given existing TechnicianId, When findById is called, Then return TechnicianDTO")
@@ -66,6 +112,14 @@ class TechnicianServiceImplTest {
                 .name("Paul")
                 .cpf("501.114.620-02")
                 .phoneNumber("(85) 988554433")
+                .build();
+    }
+    private Technician getMockTechnicianTwo() {
+        return Technician.builder()
+                .id(2)
+                .name("Joe")
+                .cpf("141.114.620-15")
+                .phoneNumber("(85) 988554452")
                 .build();
     }
 
