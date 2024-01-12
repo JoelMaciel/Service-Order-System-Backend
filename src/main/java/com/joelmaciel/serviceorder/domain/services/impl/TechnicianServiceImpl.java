@@ -1,0 +1,60 @@
+package com.joelmaciel.serviceorder.domain.services.impl;
+
+import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
+import com.joelmaciel.serviceorder.domain.entities.Technician;
+import com.joelmaciel.serviceorder.domain.excptions.TechnicianNotFoundException;
+import com.joelmaciel.serviceorder.domain.repositories.TechnicianRepository;
+import com.joelmaciel.serviceorder.domain.services.TechnicianService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class TechnicianServiceImpl implements TechnicianService {
+
+    private final TechnicianRepository technicianRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public TechnicianDTO findById(Integer technicianId) {
+        Technician technician = findByTechnicianId(technicianId);
+        return toDTO(technician);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Technician findByTechnicianId(Integer technicianId) {
+        return technicianRepository.findById(technicianId)
+                .orElseThrow(() -> new TechnicianNotFoundException(technicianId));
+    }
+
+    private TechnicianDTO toDTO(Technician technician) {
+        return TechnicianDTO.builder()
+                .id(technician.getId())
+                .name(technician.getName())
+                .cpf(technician.getCpf())
+                .phoneNumber(technician.getPhoneNumber())
+                .build();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
