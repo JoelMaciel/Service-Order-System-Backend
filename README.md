@@ -18,7 +18,13 @@
 ## Request Images
 
 ### Migration of tables
-![Captura de tela de 2024-01-12 20-29-00](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/4ffc57f6-ae2b-4ec0-a4ba-a8a0c9d7b9ee)
+![Captura de tela de 2024-01-12 22-35-12](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/abaca31c-3485-4b1e-94e2-fae3c5798bbc)
+
+### Jacoco
+#### *To run Jacoco  --->>    mvn clean test jacoco:report*
+![Captura de tela de 2024-01-12 22-34-24](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/64b69f09-6d23-409e-a996-1c78159126e8)
+![Captura de tela de 2024-01-12 22-34-10](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/f19c7294-88de-422b-a08c-d657b09b8439)
+
 
 ### Data base
 ![Captura de tela de 2024-01-12 20-28-37](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/69dba089-7170-4348-bb34-1a971fb8f096)
