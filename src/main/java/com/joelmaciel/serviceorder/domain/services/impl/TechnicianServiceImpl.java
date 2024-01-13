@@ -52,6 +52,13 @@ public class TechnicianServiceImpl implements TechnicianService {
     }
 
     @Override
+    @Transactional
+    public void delete(Integer technicianId) {
+        Technician technician = findByTechnicianId(technicianId);
+        technicianRepository.delete(technician);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Technician findByTechnicianId(Integer technicianId) {
         return technicianRepository.findById(technicianId)

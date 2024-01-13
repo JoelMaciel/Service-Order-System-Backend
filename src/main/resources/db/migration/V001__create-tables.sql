@@ -23,6 +23,6 @@ CREATE TABLE order_service (
     status ENUM('OPEN', 'IN_PROGRESS', 'CLOSED') NOT NULL,
     technician_id INT,
     customer_id INT,
-    FOREIGN KEY (technician_id) REFERENCES technician(id),
-    FOREIGN KEY (customer_id) REFERENCES customer(id)
+    FOREIGN KEY (technician_id) REFERENCES technician(id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE
 );
