@@ -16,4 +16,6 @@ public interface TechnicianService {
     TechnicianDTO update(Integer technicianId, TechnicianUpdateDTO technicianUpdateDTOO);
 
     TechnicianDTO save(TechnicianRequestDTO technicianRequestDTO);
+
+    void delete(Integer technicianId);
 }

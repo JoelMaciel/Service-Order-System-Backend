@@ -5,6 +5,7 @@ import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.services.TechnicianService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,7 +37,16 @@ public class TechnicianController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public TechnicianDTO save(@RequestBody @Valid TechnicianRequestDTO technicianRequestDTO) {
         return technicianService.save(technicianRequestDTO);
     }
+
+    @DeleteMapping("/{technicianId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void  delete(@PathVariable Integer technicianId) {
+        technicianService.delete(technicianId);
+    }
+
+
 }
