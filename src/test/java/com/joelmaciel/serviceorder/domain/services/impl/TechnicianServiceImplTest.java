@@ -194,6 +194,32 @@ class TechnicianServiceImplTest {
         verify(technicianRepository, times(1)).save(any(Technician.class));
     }
 
+    @Test
+    @DisplayName("Given existing TechnicianId, When delete is called, Then technician is deleted")
+    void givenExistingTechnicianId_whenDelete_thenTechnicianIsDeleted() {
+        Integer technicianId = 1;
+        Technician technician = getTechnician();
+
+        when(technicianRepository.findById(technicianId)).thenReturn(Optional.of(technician));
+        technicianService.delete(technicianId);
+        verify(technicianRepository, times(1)).delete(technician);
+    }
+
+    @Test
+    @DisplayName("Given non-existing TechnicianId, When delete is called, Then throw TechnicianNotFoundException")
+    void givenNonExistingTechnicianId_whenDelete_thenThrowTechnicianNotFoundException() {
+        Integer invalidTechnicianId = 100;
+        Technician technician = getTechnician();
+
+        when(technicianRepository.findById(invalidTechnicianId)).thenReturn(Optional.empty());
+
+        TechnicianNotFoundException exception = assertThrows(TechnicianNotFoundException.class,
+                () -> technicianService.delete(invalidTechnicianId)
+        );
+
+        assertEquals(TECHNICIAN_NOT_FOUND, exception.getMessage());
+        verify(technicianRepository, never()).delete(technician);
+    }
 
     private static TechnicianRequestDTO getTechnicianRequestDTO() {
         return TechnicianRequestDTO.builder()

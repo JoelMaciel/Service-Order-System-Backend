@@ -4,17 +4,17 @@
 
 # About the project.
 
-## Project under construction....
 
-### Service Order System where it will be possible to create, 
-### update and delete orders, link an order to a specific technician
-### and whether the order is completed or in progress and whether 
-### it has high, moderate or low priority
+
+### *Service Order System where it will be possible to create,*
+### *update and delete orders, link an order to a specific technician*
+### *and whether the order is completed or in progress and whether* 
+### *it has high, moderate or low priority*
 ## Technology used :
--  JAVA ---  SPRING BOOT ---  DOCKER 
+-  JAVA 11 ---  SPRING BOOT ---  DOCKER 
 -  CI/CD ---   JUNIT5 ---  MOCKITO --- JACOCO
-- SPRING DATA JPA --- MYSQL
--
+-  SPRING DATA JPA --- MYSQL --- FLYWAY
+
 ## Request Images
 
 ### Migration of tables
