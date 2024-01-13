@@ -187,10 +187,7 @@ class TechnicianServiceImplTest {
             technicianService.save(technicianRequestDTO);
         });
 
-        assertTrue(exception.getMessage().contains(
-                "There is already a technician registered with this CPF")
-        );
-
+        assertEquals(TechnicianServiceImplTest.CPF_IN_USE, exception.getMessage());
         verify(technicianRepository, times(1)).save(any(Technician.class));
     }
 
