@@ -1,5 +1,6 @@
 package com.joelmaciel.serviceorder.domain.services.impl;
 
+import com.joelmaciel.serviceorder.api.dtos.request.TechnicianRequestDTO;
 import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.entities.Technician;
@@ -37,6 +38,13 @@ public class TechnicianServiceImpl implements TechnicianService {
     }
 
     @Override
+    @Transactional
+    public TechnicianDTO save(TechnicianRequestDTO technicianRequestDTO) {
+        Technician technician = toEntity(technicianRequestDTO);
+        return toDTO(technicianRepository.save(technician));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public TechnicianDTO findById(Integer technicianId) {
         Technician technician = findByTechnicianId(technicianId);
@@ -56,6 +64,14 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .name(technician.getName())
                 .cpf(technician.getCpf())
                 .phoneNumber(technician.getPhoneNumber())
+                .build();
+    }
+
+    private Technician toEntity(TechnicianRequestDTO requestDTO) {
+        return Technician.builder()
+                .name(requestDTO.getName())
+                .cpf(requestDTO.getCpf())
+                .phoneNumber(requestDTO.getPhoneNumber())
                 .build();
     }
 }

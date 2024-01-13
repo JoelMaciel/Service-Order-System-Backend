@@ -10,7 +10,7 @@ public enum ProblemType {
     INVALID_PARAMETER("/invalid-parameter", "Invalid Parameter"),
     MESSAGE_INCOMPREHESIBLE("/message-incomprehensible", "Message Incomprehensible"),
     RESOURCE_NOT_FUND("/resource-not-found", "Resource Not Found"),
-    ENTITY_IN_USE("/entity-in-use", "Entity In Use"),
+    CPF_IN_USE("/cpf-in-use", "CPF In Use"),
     BUSINESS_ERROR("/business-error", "Business Rule Violation");
 
     private String title;

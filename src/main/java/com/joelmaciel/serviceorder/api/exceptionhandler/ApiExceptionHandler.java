@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     public static final String MSG_GENERIC_ERROR_END_USER = "An unexpected internal system error has occurred."
             + "Try again and if the problem persists, contact us with the system administrator.";
+    public static final String CPF_IN_USE = "There is already a technician registered with this CPF";
 
     private final MessageSource messageSource;
 
@@ -58,6 +60,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .userMessage(detail)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleBusiness(DataIntegrityViolationException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        ProblemType problemType = ProblemType.CPF_IN_USE;
+        String detail = CPF_IN_USE;
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(CPF_IN_USE)
                 .build();
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);

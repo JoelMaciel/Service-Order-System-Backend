@@ -1,5 +1,6 @@
 package com.joelmaciel.serviceorder.api.controllers;
 
+import com.joelmaciel.serviceorder.api.dtos.request.TechnicianRequestDTO;
 import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.services.TechnicianService;
@@ -32,5 +33,10 @@ public class TechnicianController {
             @RequestBody @Valid TechnicianUpdateDTO technicianUpdateDTOO
     ) {
         return technicianService.update(technicianId, technicianUpdateDTOO);
+    }
+
+    @PostMapping
+    public TechnicianDTO save(@RequestBody @Valid TechnicianRequestDTO technicianRequestDTO) {
+        return technicianService.save(technicianRequestDTO);
     }
 }

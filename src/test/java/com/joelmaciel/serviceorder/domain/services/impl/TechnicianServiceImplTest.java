@@ -1,5 +1,6 @@
 package com.joelmaciel.serviceorder.domain.services.impl;
 
+import com.joelmaciel.serviceorder.api.dtos.request.TechnicianRequestDTO;
 import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.entities.Technician;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.*;
 class TechnicianServiceImplTest {
 
     public static final String TECHNICIAN_NOT_FOUND = "There is no such technician 100 registered in the database ";
+    public static final String CPF_IN_USE = "There is already a technician registered with this CPF";
     @Mock
     private TechnicianRepository technicianRepository;
     @InjectMocks
@@ -149,6 +152,65 @@ class TechnicianServiceImplTest {
         verify(technicianRepository, never()).save(any(Technician.class));
     }
 
+    @Test
+    @DisplayName("Given valid TechnicianRequestDTO, When save is called, Then return saved TechnicianDTO")
+    void givenValidTechnicianRequestDTO_whenSave_thenReturnSavedTechnicianDTO() {
+        TechnicianRequestDTO technicianRequestDTO = getTechnicianRequestDTO();
+        Technician technician = getTechnician();
+
+        when(technicianRepository.save(any(Technician.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        TechnicianDTO savedTechnicianDTO = technicianService.save(technicianRequestDTO);
+
+        assertNotNull(savedTechnicianDTO);
+        assertEquals(technician.getName(), savedTechnicianDTO.getName());
+        assertEquals(technician.getCpf(), savedTechnicianDTO.getCpf());
+        assertEquals(technician.getPhoneNumber(), savedTechnicianDTO.getPhoneNumber());
+
+        verify(technicianRepository, times(1)).save(any(Technician.class));
+    }
+
+    @Test
+    @DisplayName("Given existing CPF, When save is called, Then throw DataIntegrityViolationException")
+    void givenExistingCPF_whenSave_thenThrowDataIntegrityViolationException() {
+        TechnicianRequestDTO technicianRequestDTO = TechnicianRequestDTO.builder()
+                .name("John")
+                .cpf("123.456.789-00")
+                .phoneNumber("(11) 98888-8888")
+                .build();
+
+        when(technicianRepository.save(any(Technician.class))).thenThrow(
+                new DataIntegrityViolationException(CPF_IN_USE)
+        );
+
+        DataIntegrityViolationException exception = assertThrows(DataIntegrityViolationException.class, () -> {
+            technicianService.save(technicianRequestDTO);
+        });
+
+        assertTrue(exception.getMessage().contains(
+                "There is already a technician registered with this CPF")
+        );
+
+        verify(technicianRepository, times(1)).save(any(Technician.class));
+    }
+
+
+    private static TechnicianRequestDTO getTechnicianRequestDTO() {
+        return TechnicianRequestDTO.builder()
+                .name("John")
+                .cpf("123.456.789-00")
+                .phoneNumber("(11) 98888-8888")
+                .build();
+    }
+
+    private static Technician getTechnician() {
+        return Technician.builder()
+                .id(1)
+                .name("John")
+                .cpf("123.456.789-00")
+                .phoneNumber("(11) 98888-8888")
+                .build();
+    }
 
     private Technician getMockTechnician() {
         return Technician.builder()
@@ -158,6 +220,7 @@ class TechnicianServiceImplTest {
                 .phoneNumber("(85) 988554433")
                 .build();
     }
+
     private Technician getMockTechnicianTwo() {
         return Technician.builder()
                 .id(2)
@@ -166,6 +229,7 @@ class TechnicianServiceImplTest {
                 .phoneNumber("(85) 988554452")
                 .build();
     }
+
     private TechnicianUpdateDTO getMockTechnicianUpdateDTO() {
         return TechnicianUpdateDTO.builder()
                 .phoneNumber("(85) 987654321")
