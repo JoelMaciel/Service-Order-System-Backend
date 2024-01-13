@@ -1,27 +1,28 @@
 package com.joelmaciel.serviceorder.domain.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("TECHNICIAN")
+@Data
+@Builder(toBuilder = true)
 @AllArgsConstructor
-public class Technician extends Person {
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Technician {
+
+    @Id
+    @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private String cpf;
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "technician")
     private List<OrderService> orderServiceList = new ArrayList<>();
 
-    public Technician(Integer id, String name, String cpf, String phoneNumber) {
-        super(id, name, cpf, phoneNumber);
-    }
-
-    public Technician() {
-    }
 }

@@ -1,21 +1,17 @@
-CREATE TABLE person (
+CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     cpf VARCHAR(14) NOT NULL,
     phone_number VARCHAR(20),
-    CONSTRAINT uk_person_cpf UNIQUE (cpf)
+    CONSTRAINT uk_customer_cpf UNIQUE (cpf)
 );
 
 CREATE TABLE technician (
-    id INT PRIMARY KEY,
-    FOREIGN KEY (id) REFERENCES person(id),
-    CONSTRAINT uc_technician_id UNIQUE (id)
-);
-
-CREATE TABLE customer (
-    id INT PRIMARY KEY,
-    FOREIGN KEY (id) REFERENCES person(id),
-    CONSTRAINT uc_customer_id UNIQUE (id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    phone_number VARCHAR(20),
+    CONSTRAINT uk_technician_cpf UNIQUE (cpf)
 );
 
 CREATE TABLE order_service (
