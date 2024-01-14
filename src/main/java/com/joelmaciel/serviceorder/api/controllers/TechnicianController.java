@@ -31,9 +31,9 @@ public class TechnicianController {
     @PatchMapping("/{technicianId}")
     public TechnicianDTO update(
             @PathVariable Integer technicianId,
-            @RequestBody @Valid TechnicianUpdateDTO technicianUpdateDTOO
+            @RequestBody @Valid TechnicianUpdateDTO technicianUpdateDTO
     ) {
-        return technicianService.update(technicianId, technicianUpdateDTOO);
+        return technicianService.update(technicianId, technicianUpdateDTO);
     }
 
     @PostMapping
