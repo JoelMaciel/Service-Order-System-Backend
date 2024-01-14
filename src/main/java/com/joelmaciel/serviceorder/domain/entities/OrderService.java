@@ -2,10 +2,7 @@ package com.joelmaciel.serviceorder.domain.entities;
 
 import com.joelmaciel.serviceorder.domain.enums.Priority;
 import com.joelmaciel.serviceorder.domain.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -14,6 +11,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderService {
 
@@ -29,7 +27,7 @@ public class OrderService {
     @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne
-    @JoinColumn(name = "technical_id")
+    @JoinColumn(name = "technician_id")
     private Technician technician;
     @ManyToOne
     @JoinColumn(name = "customer_id")
