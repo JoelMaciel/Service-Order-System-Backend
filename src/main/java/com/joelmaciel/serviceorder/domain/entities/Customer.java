@@ -1,16 +1,15 @@
 package com.joelmaciel.serviceorder.domain.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Builder(toBuilder = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Customer {
 
