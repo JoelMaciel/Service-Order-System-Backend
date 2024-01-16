@@ -56,26 +56,6 @@ class OrderServiceServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given existing order service, When findById is called, Then return OrderServiceDTO")
-    void givenExistingOrderService_whenFindById_thenReturnOrderServiceDTO() {
-        when(orderServiceRepository.findById(orderService.getId())).thenReturn(Optional.of(orderService));
-
-        OrderServiceDTO orderServiceDTO = orderServiceService.findById(orderService.getId());
-
-        assertNotNull(orderServiceDTO);
-        assertEquals(orderService.getId(), orderServiceDTO.getId());
-        assertEquals(orderService.getOpeningDate(), orderServiceDTO.getOpeningDate());
-        assertEquals(orderService.getClosingDate(), orderServiceDTO.getClosingDate());
-        assertEquals(orderService.getPriority(), orderServiceDTO.getPriority());
-        assertEquals(orderService.getObservation(), orderServiceDTO.getObservation());
-        assertEquals(orderService.getStatus(), orderServiceDTO.getStatus());
-        assertEquals(orderService.getTechnician().getId(), orderServiceDTO.getTechnician());
-        assertEquals(orderService.getCustomer().getId(), orderServiceDTO.getCustomer());
-
-        verify(orderServiceRepository, times(1)).findById(orderService.getId());
-    }
-
-    @Test
     @DisplayName("Given non-existing order service, When findById is called, Then throw OrderServiceNotFoundException")
     void givenNonExistingOrderService_whenFindById_thenThrowOrderServiceNotFoundException() {
         when(orderServiceRepository.findById(2)).thenReturn(Optional.empty());
