@@ -15,5 +15,5 @@ INSERT INTO customer (id, name, cpf, phone_number) VALUES
     (2, 'Alencar', '222.222.222-55', '(84) 987369655');
 
 INSERT INTO order_service (id,opening_date, closing_date, priority, observation, status, technician_id, customer_id) VALUES
-    (1,'2024-01-12 10:00:00', '2024-01-12 12:00:00', 'HIGH', 'Observation 1', 'OPEN', 1, 1),
+    (1,'2024-01-12 10:00:00', null , 'HIGH', 'Observation 1', 'OPEN', 1, 1),
     (2, '2024-01-13 14:00:00', '2024-01-13 16:00:00', 'MEDIUM', 'Observation 2', 'CLOSED', 2, 2);
