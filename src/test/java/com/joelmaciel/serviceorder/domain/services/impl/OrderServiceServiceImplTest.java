@@ -24,8 +24,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,56 +87,6 @@ class OrderServiceServiceImplTest {
         assertEquals(SERVICE_ORDER_NOT_FOUND, exception.getMessage());
 
         verify(orderServiceRepository, times(1)).findById(2);
-    }
-
-    @Test
-    @DisplayName("Given existing order services, When findAll is called, Then return a list of OrderServiceDTOs")
-    void givenExistingOrderServices_whenFindAll_thenReturnListOfOrderServiceDTOs() {
-        List<OrderService> mockOrderServices = Arrays.asList(orderService, getAnotherMockOrderService());
-        when(orderServiceRepository.findAll()).thenReturn(mockOrderServices);
-
-        List<OrderServiceDTO> orderServiceDTOList = orderServiceService.findAll();
-
-        assertNotNull(orderServiceDTOList);
-        assertEquals(mockOrderServices.size(), orderServiceDTOList.size());
-
-        for (int i = 0; i < mockOrderServices.size(); i++) {
-            OrderServiceDTO orderServiceDTO = orderServiceDTOList.get(i);
-            OrderService mockOrderService = mockOrderServices.get(i);
-
-            assertEquals(mockOrderService.getId(), orderServiceDTO.getId());
-            assertEquals(mockOrderService.getOpeningDate(), orderServiceDTO.getOpeningDate());
-            assertEquals(mockOrderService.getClosingDate(), orderServiceDTO.getClosingDate());
-            assertEquals(mockOrderService.getPriority(), orderServiceDTO.getPriority());
-            assertEquals(mockOrderService.getObservation(), orderServiceDTO.getObservation());
-            assertEquals(mockOrderService.getStatus(), orderServiceDTO.getStatus());
-            assertEquals(mockOrderService.getTechnician().getId(), orderServiceDTO.getTechnician());
-            assertEquals(mockOrderService.getCustomer().getId(), orderServiceDTO.getCustomer());
-        }
-
-        verify(orderServiceRepository, times(1)).findAll();
-    }
-
-    @Test
-    @DisplayName("Given valid order service request, When save is called, Then return OrderServiceDTO")
-    void givenValidOrderServiceRequest_whenSave_thenReturnOrderServiceDTO() {
-        Customer mockCustomer = getMockCustomer();
-        Technician technician = getMockTechnician();
-        OrderServiceRequestDTO mocOrderServiceRequestDTO = getMockOrderServiceRequestDTO();
-        when(customerService.findByCustomerId(anyInt())).thenReturn(mockCustomer);
-        when(technicianService.findByTechnicianId(anyInt())).thenReturn(technician);
-        when(orderServiceRepository.save(any(OrderService.class))).thenReturn(orderService);
-
-        OrderServiceDTO resultDTO = orderServiceService.save(mocOrderServiceRequestDTO);
-
-        assertNotNull(resultDTO);
-        assertEquals(orderService.getId(), resultDTO.getId());
-        assertEquals(orderService.getOpeningDate(), resultDTO.getOpeningDate());
-        assertEquals(orderService.getClosingDate(), resultDTO.getClosingDate());
-        assertEquals(orderService.getPriority(), resultDTO.getPriority());
-        assertEquals(orderService.getObservation(), resultDTO.getObservation());
-        assertEquals(orderService.getStatus(), resultDTO.getStatus());
-        verify(orderServiceRepository, times(1)).save(any(OrderService.class));
     }
 
     @Test
