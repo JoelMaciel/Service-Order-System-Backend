@@ -45,6 +45,19 @@
 ### Get All Customers
 ![Captura de tela de 2024-01-13 21-59-46](https://github.com/JoelMaciel/MicroCommerce/assets/77079093/7075ad56-c420-4b4b-8095-b6655371d23f)
 
+### Creating Order Service
+![Captura de tela de 2024-01-15 21-06-12](https://github.com/JoelMaciel/CART-SHOP-FRONTEND/assets/77079093/4c646f86-2841-479b-b17a-1f827fd90264)
+
+###  Unit Tests OrderService
+
+![Captura de tela de 2024-01-16 10-46-27](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/2d42fae8-ebca-45ce-a9ce-1df3f3839f9a)
+![Captura de tela de 2024-01-16 10-46-15](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/018719e1-e1b7-4453-9fae-8189f985596d)
+
+### Patch OrderService
+![Captura de tela de 2024-01-16 09-47-37](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/84ad6045-e003-4f3c-8469-30e224a1731b)
+
+
+
 
 
 

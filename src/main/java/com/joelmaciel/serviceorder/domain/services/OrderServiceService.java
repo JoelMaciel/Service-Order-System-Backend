@@ -1,5 +1,7 @@
 package com.joelmaciel.serviceorder.domain.services;
 
+import com.joelmaciel.serviceorder.api.dtos.request.OrderServiceRequestDTO;
+import com.joelmaciel.serviceorder.api.dtos.request.OrderServiceRequestUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.OrderServiceDTO;
 import com.joelmaciel.serviceorder.domain.entities.OrderService;
 
@@ -13,4 +15,8 @@ public interface OrderServiceService {
 
 
     List<OrderServiceDTO> findAll();
+
+    OrderServiceDTO save(OrderServiceRequestDTO orderServiceRequestDTO);
+
+    OrderServiceDTO update(Integer orderServiceId, OrderServiceRequestUpdateDTO updateDTO);
 }
