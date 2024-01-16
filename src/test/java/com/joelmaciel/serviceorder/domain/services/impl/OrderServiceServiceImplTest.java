@@ -1,6 +1,7 @@
 package com.joelmaciel.serviceorder.domain.services.impl;
 
 import com.joelmaciel.serviceorder.api.dtos.request.OrderServiceRequestDTO;
+import com.joelmaciel.serviceorder.api.dtos.request.OrderServiceRequestUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.OrderServiceDTO;
 import com.joelmaciel.serviceorder.domain.entities.Customer;
 import com.joelmaciel.serviceorder.domain.entities.OrderService;
@@ -21,7 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
@@ -154,6 +154,55 @@ class OrderServiceServiceImplTest {
         verify(customerService, times(1)).findByCustomerId(anyInt());
     }
 
+    @Test
+    @DisplayName("Given an existing order service, When the update method is called, Then it returns OrderServiceDTO")
+    void givenExistingOrderService_whenUpdateMethodIsCalled_thenReturnsOrderServiceDTO() {
+        OrderService mockOrderService = getMockOrderService();
+        OrderServiceRequestUpdateDTO updateDTO = getMockOrderServiceRequestUpdateDTO();
+
+        when(orderServiceRepository.findById(1)).thenReturn(Optional.ofNullable(mockOrderService));
+        when(technicianService.findByTechnicianId(anyInt())).thenReturn(getMockTechnician());
+        when(orderServiceRepository.save(any(OrderService.class))).thenReturn(mockOrderService);
+
+        OrderServiceDTO resultDTO = orderServiceService.update(1, updateDTO);
+
+        assertNotNull(resultDTO);
+        assertEquals(mockOrderService.getId(), resultDTO.getId());
+        assertEquals(mockOrderService.getOpeningDate(), resultDTO.getOpeningDate());
+        assertEquals(mockOrderService.getClosingDate(), resultDTO.getClosingDate());
+        assertEquals(mockOrderService.getPriority(), resultDTO.getPriority());
+        assertEquals(mockOrderService.getObservation(), resultDTO.getObservation());
+        assertEquals(mockOrderService.getStatus(), resultDTO.getStatus());
+
+        verify(orderServiceRepository, times(1)).findById(anyInt());
+        verify(orderServiceRepository, times(1)).save(any(OrderService.class));
+    }
+
+    @Test
+    @DisplayName("Given a non-existing service order, When the update method is called, Then it throws OrderServiceNotFoundException")
+    void givenNonExistingServiceOrder_whenUpdateMethodIsCalled_thenThrowsOrderServiceNotFoundException() {
+        OrderServiceRequestUpdateDTO updateDTO = getMockOrderServiceRequestUpdateDTO();
+        when(orderServiceRepository.findById(1)).thenReturn(Optional.empty());
+
+        OrderServiceNotFoundException exception = assertThrows(OrderServiceNotFoundException.class, () -> {
+            orderServiceService.update(1, updateDTO);
+        });
+
+        assertEquals("Service Order not registered in the database", exception.getMessage());
+        verify(orderServiceRepository, times(1)).findById(anyInt());
+        verify(technicianService, never()).findByTechnicianId(anyInt());
+        verify(orderServiceRepository, never()).save(any(OrderService.class));
+    }
+
+    private OrderServiceRequestUpdateDTO getMockOrderServiceRequestUpdateDTO() {
+        return OrderServiceRequestUpdateDTO.builder()
+                .status(Status.IN_PROGRESS)
+                .priority(Priority.MEDIUM)
+                .observation("Client want fast")
+                .technician(1)
+                .build();
+    }
+
     private OrderServiceRequestDTO getMockOrderServiceRequestDTO() {
         return OrderServiceRequestDTO.builder()
                 .status(Status.IN_PROGRESS)
@@ -183,8 +232,8 @@ class OrderServiceServiceImplTest {
                 .build();
     }
 
-    private void getMockOrderService() {
-        orderService = OrderService.builder()
+    private OrderService getMockOrderService() {
+        return OrderService.builder()
                 .id(1)
                 .priority(Priority.MEDIUM)
                 .observation("Observation Teste")
