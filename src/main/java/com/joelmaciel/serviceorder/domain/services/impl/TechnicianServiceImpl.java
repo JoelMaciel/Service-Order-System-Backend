@@ -32,8 +32,7 @@ public class TechnicianServiceImpl implements TechnicianService {
     @Override
     @Transactional
     public TechnicianDTO update(Integer technicianId, TechnicianUpdateDTO technicianUpdateDTO) {
-        Technician technician = findByTechnicianId(technicianId);
-        technician.setPhoneNumber(technicianUpdateDTO.getPhoneNumber());
+        Technician technician = toTechnicalUpdate(technicianId, technicianUpdateDTO);
         return toDTO(technicianRepository.save(technician));
     }
 
@@ -65,11 +64,22 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .orElseThrow(() -> new TechnicianNotFoundException(technicianId));
     }
 
+    private Technician toTechnicalUpdate(Integer technicianId, TechnicianUpdateDTO technicianUpdateDTO) {
+        Technician existingTechnician = findByTechnicianId(technicianId);
+        return existingTechnician.toBuilder()
+                .name(technicianUpdateDTO.getName())
+                .phoneNumber(technicianUpdateDTO.getPhoneNumber())
+                .jobFunction(technicianUpdateDTO.getJobFunction())
+                .build();
+    }
+
+
     private TechnicianDTO toDTO(Technician technician) {
         return TechnicianDTO.builder()
                 .id(technician.getId())
                 .name(technician.getName())
                 .cpf(technician.getCpf())
+                .jobFunction(technician.getJobFunction())
                 .phoneNumber(technician.getPhoneNumber())
                 .build();
     }
@@ -78,6 +88,7 @@ public class TechnicianServiceImpl implements TechnicianService {
         return Technician.builder()
                 .name(requestDTO.getName())
                 .cpf(requestDTO.getCpf())
+                .jobFunction(requestDTO.getJobFunction())
                 .phoneNumber(requestDTO.getPhoneNumber())
                 .build();
     }
