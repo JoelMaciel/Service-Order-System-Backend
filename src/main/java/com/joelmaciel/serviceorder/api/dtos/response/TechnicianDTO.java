@@ -16,5 +16,6 @@ public class TechnicianDTO {
     private Integer id;
     private String name;
     private String cpf;
+    private String jobFunction;
     private String phoneNumber;
 }
