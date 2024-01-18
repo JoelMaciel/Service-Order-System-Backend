@@ -6,9 +6,10 @@ DELETE FROM order_service;
 
 SET foreign_key_checks = 1;
 
-INSERT INTO technician (id, name, cpf, phone_number) VALUES
-    (1, 'Joel', '123.456.789-33', '(85) 999369699'),
-    (2, 'Maciel', '987.654.321-22', '(88) 988996646');
+INSERT INTO technician (id, name, cpf, phone_number, job_function) VALUES
+    (1, 'Joel', '123.456.789-33', '(85) 999369699', 'Mechanic'),
+    (2, 'Maciel', '987.654.321-22', '(88) 988996646', 'Electrician');
+
 
 INSERT INTO customer (id, name, cpf, phone_number) VALUES
     (1, 'Mirela', '111.111.111-44', '(81) 997369644'),

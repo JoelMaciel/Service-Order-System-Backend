@@ -19,5 +19,7 @@ public class TechnicianRequestDTO {
     @NotNull
     private String cpf;
     @NotBlank
+    private String jobFunction;
+    @NotBlank
     private String phoneNumber;
 }
