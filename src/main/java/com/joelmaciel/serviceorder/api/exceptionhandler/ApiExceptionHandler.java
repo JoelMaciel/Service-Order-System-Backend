@@ -34,7 +34,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     public static final String MSG_GENERIC_ERROR_END_USER = "An unexpected internal system error has occurred."
             + "Try again and if the problem persists, contact us with the system administrator.";
-    public static final String CPF_IN_USE = "CPF already registered in the database";
+    public static final String CPF_IN_USE = "CPF or CNPJ already registered in the database";
 
     private final MessageSource messageSource;
 

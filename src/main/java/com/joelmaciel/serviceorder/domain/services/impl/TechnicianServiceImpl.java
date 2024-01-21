@@ -4,6 +4,8 @@ import com.joelmaciel.serviceorder.api.dtos.request.TechnicianRequestDTO;
 import com.joelmaciel.serviceorder.api.dtos.request.TechnicianUpdateDTO;
 import com.joelmaciel.serviceorder.api.dtos.response.TechnicianDTO;
 import com.joelmaciel.serviceorder.domain.entities.Technician;
+import com.joelmaciel.serviceorder.domain.enums.Status;
+import com.joelmaciel.serviceorder.domain.excptions.BusinessException;
 import com.joelmaciel.serviceorder.domain.excptions.TechnicianNotFoundException;
 import com.joelmaciel.serviceorder.domain.repositories.TechnicianRepository;
 import com.joelmaciel.serviceorder.domain.services.TechnicianService;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TechnicianServiceImpl implements TechnicianService {
 
+    public static final String TECHNICIAN_IN_USE = "Technician has pending service order, cannot be deleted";
     private final TechnicianRepository technicianRepository;
 
     @Override
@@ -54,6 +57,11 @@ public class TechnicianServiceImpl implements TechnicianService {
     @Transactional
     public void delete(Integer technicianId) {
         Technician technician = findByTechnicianId(technicianId);
+        if (technician.getOrderServiceList()
+                .stream()
+                .anyMatch(orderService -> orderService.getStatus() != Status.CLOSED)) {
+            throw new BusinessException(TECHNICIAN_IN_USE);
+        }
         technicianRepository.delete(technician);
     }
 

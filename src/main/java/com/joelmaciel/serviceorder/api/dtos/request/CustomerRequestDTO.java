@@ -1,7 +1,7 @@
 package com.joelmaciel.serviceorder.api.dtos.request;
 
 import lombok.*;
-import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,9 +15,9 @@ public class CustomerRequestDTO {
 
     @NotBlank
     private String name;
-    @CPF
+    @CNPJ
     @NotNull
-    private String cpf;
+    private String cnpj;
     @NotBlank
     private String phoneNumber;
 }

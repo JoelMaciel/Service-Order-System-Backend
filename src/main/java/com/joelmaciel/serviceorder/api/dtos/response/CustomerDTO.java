@@ -15,6 +15,6 @@ public class CustomerDTO {
 
     private Integer id;
     private String name;
-    private String cpf;
+    private String cnpj;
     private String phoneNumber;
 }

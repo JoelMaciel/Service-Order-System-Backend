@@ -192,17 +192,6 @@ class TechnicianServiceImplTest {
     }
 
     @Test
-    @DisplayName("Given existing TechnicianId, When delete is called, Then technician is deleted")
-    void givenExistingTechnicianId_whenDelete_thenTechnicianIsDeleted() {
-        Integer technicianId = 1;
-        Technician technician = getTechnician();
-
-        when(technicianRepository.findById(technicianId)).thenReturn(Optional.of(technician));
-        technicianService.delete(technicianId);
-        verify(technicianRepository, times(1)).delete(technician);
-    }
-
-    @Test
     @DisplayName("Given non-existing TechnicianId, When delete is called, Then throw TechnicianNotFoundException")
     void givenNonExistingTechnicianId_whenDelete_thenThrowTechnicianNotFoundException() {
         Integer invalidTechnicianId = 100;

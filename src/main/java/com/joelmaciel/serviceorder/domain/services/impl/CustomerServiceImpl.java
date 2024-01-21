@@ -39,9 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public CustomerDTO update(Integer customerId, CustomerUpdateDTO customerUpdateDTO) {
-        Customer customer = findByCustomerId(customerId);
-        customer.setPhoneNumber(customerUpdateDTO.getPhoneNumber());
-        return toDTO(customerRepository.save(customer));
+        Customer customerUpdate = toCustomerUpdate(customerId, customerUpdateDTO);
+        return toDTO(customerRepository.save(customerUpdate));
     }
 
     @Override
@@ -72,11 +71,21 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
     }
 
+    private Customer toCustomerUpdate(Integer customerId, CustomerUpdateDTO customerUpdateDTO) {
+        Customer customer = findByCustomerId(customerId);
+        return customer.toBuilder()
+                .name(customerUpdateDTO.getName())
+                .phoneNumber(customerUpdateDTO.getPhoneNumber())
+                .cnpj(customerUpdateDTO.getCnpj())
+                .build();
+    }
+
+
     private CustomerDTO toDTO(Customer customer) {
         return CustomerDTO.builder()
                 .id(customer.getId())
                 .name(customer.getName())
-                .cpf(customer.getCpf())
+                .cnpj(customer.getCnpj())
                 .phoneNumber(customer.getPhoneNumber())
                 .build();
     }
@@ -84,7 +93,7 @@ public class CustomerServiceImpl implements CustomerService {
     private Customer toEntity(CustomerRequestDTO requestDTO) {
         return Customer.builder()
                 .name(requestDTO.getName())
-                .cpf(requestDTO.getCpf())
+                .cnpj(requestDTO.getCnpj())
                 .phoneNumber(requestDTO.getPhoneNumber())
                 .build();
     }

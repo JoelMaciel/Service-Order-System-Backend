@@ -68,6 +68,8 @@ public class OrderServiceServiceImpl implements OrderServiceService {
 
         if (updateDTO.getStatus().equals(Status.CLOSED)) {
             updatedOrderService.setClosingDate(OffsetDateTime.now());
+        } else if (updateDTO.getStatus().equals(Status.OPEN) || updateDTO.getStatus().equals(Status.IN_PROGRESS)) {
+            updatedOrderService.setClosingDate(null);
         }
 
         return toDTO(orderServiceRepository.save(updatedOrderService));

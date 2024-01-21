@@ -55,7 +55,7 @@ class CustomerServiceImplTest {
 
             assertEquals(customer.getId(), customerDTO.getId());
             assertEquals(customer.getName(), customerDTO.getName());
-            assertEquals(customer.getCpf(), customerDTO.getCpf());
+            assertEquals(customer.getCnpj(), customerDTO.getCnpj());
             assertEquals(customer.getPhoneNumber(), customerDTO.getPhoneNumber());
         }
 
@@ -88,7 +88,7 @@ class CustomerServiceImplTest {
         assertNotNull(customerDTO);
         assertEquals(customer.getId(), customerDTO.getId());
         assertEquals(customer.getName(), customerDTO.getName());
-        assertEquals(customer.getCpf(), customerDTO.getCpf());
+        assertEquals(customer.getCnpj(), customerDTO.getCnpj());
         assertEquals(customer.getPhoneNumber(), customerDTO.getPhoneNumber());
 
         verify(customerRepository, times(1)).findById(customerId);
@@ -128,7 +128,7 @@ class CustomerServiceImplTest {
         assertNotNull(customerDTO);
         assertEquals(updatedCustomer.getId(), customerDTO.getId());
         assertEquals(updatedCustomer.getName(), customerDTO.getName());
-        assertEquals(updatedCustomer.getCpf(), customerDTO.getCpf());
+        assertEquals(updatedCustomer.getCnpj(), customerDTO.getCnpj());
         assertEquals(updatedCustomer.getPhoneNumber(), customerDTO.getPhoneNumber());
 
         verify(customerRepository, times(1)).findById(customerId);
@@ -164,7 +164,7 @@ class CustomerServiceImplTest {
 
         assertNotNull(savedCustomerDTO);
         assertEquals(customer.getName(), savedCustomerDTO.getName());
-        assertEquals(customer.getCpf(), savedCustomerDTO.getCpf());
+        assertEquals(customer.getCnpj(), savedCustomerDTO.getCnpj());
         assertEquals(customer.getPhoneNumber(), savedCustomerDTO.getPhoneNumber());
 
         verify(customerRepository, times(1)).save(any(Customer.class));
@@ -175,7 +175,7 @@ class CustomerServiceImplTest {
     void givenExistingCPF_whenSave_thenThrowDataIntegrityViolationException() {
         CustomerRequestDTO customerRequestDTO = CustomerRequestDTO.builder()
                 .name("John")
-                .cpf("123.456.789-00")
+                .cnpj("123.456.789-00")
                 .phoneNumber("(11) 98888-8888")
                 .build();
 
@@ -221,7 +221,7 @@ class CustomerServiceImplTest {
     private static CustomerRequestDTO getCustomerRequestDTO() {
         return CustomerRequestDTO.builder()
                 .name("John")
-                .cpf("123.456.789-00")
+                .cnpj("123.456.789-00")
                 .phoneNumber("(11) 98888-8888")
                 .build();
     }
@@ -230,7 +230,7 @@ class CustomerServiceImplTest {
         return Customer.builder()
                 .id(1)
                 .name("John")
-                .cpf("123.456.789-00")
+                .cnpj("123.456.789-00")
                 .phoneNumber("(11) 98888-8888")
                 .build();
     }
@@ -239,7 +239,7 @@ class CustomerServiceImplTest {
         return Customer.builder()
                 .id(1)
                 .name("Paul")
-                .cpf("501.114.620-02")
+                .cnpj("501.114.620-02")
                 .phoneNumber("(85) 988554433")
                 .build();
     }
@@ -248,7 +248,7 @@ class CustomerServiceImplTest {
         return Customer.builder()
                 .id(2)
                 .name("Joe")
-                .cpf("141.114.620-15")
+                .cnpj("141.114.620-15")
                 .phoneNumber("(85) 988554452")
                 .build();
     }
