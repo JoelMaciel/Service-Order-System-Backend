@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
@@ -13,6 +15,11 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class CustomerUpdateDTO {
 
+    @NotBlank
+    private String name;
+    @NotNull
+    @CNPJ
+    private String cnpj;
     @NotBlank
     private String phoneNumber;
 }

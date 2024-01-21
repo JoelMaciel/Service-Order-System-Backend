@@ -146,7 +146,7 @@ class OrderServiceServiceImplTest {
         return Customer.builder()
                 .id(1)
                 .name("Paul")
-                .cpf("501.114.620-02")
+                .cnpj("501.114.620-02")
                 .phoneNumber("(85) 988554433")
                 .build();
     }

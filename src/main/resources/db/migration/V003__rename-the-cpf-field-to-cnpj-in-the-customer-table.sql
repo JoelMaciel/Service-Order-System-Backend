@@ -1,0 +1,2 @@
+ALTER TABLE customer
+CHANGE COLUMN cpf cnpj VARCHAR(18) NOT NULL;

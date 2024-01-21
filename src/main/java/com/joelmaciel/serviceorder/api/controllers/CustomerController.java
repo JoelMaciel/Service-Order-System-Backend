@@ -28,7 +28,7 @@ public class CustomerController {
         return customerService.findById(customerId);
     }
 
-    @PatchMapping("/{customerId}")
+    @PutMapping("/{customerId}")
     public CustomerDTO update(
             @PathVariable Integer customerId,
             @RequestBody @Valid CustomerUpdateDTO customerUpdateDTO
