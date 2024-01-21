@@ -20,6 +20,13 @@
 ### Migration of tables
 ![Captura de tela de 2024-01-12 22-35-12](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/abaca31c-3485-4b1e-94e2-fae3c5798bbc)
 
+### Swagger Documentation
+![Captura de tela de 2024-01-21 12-17-47](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/85de9312-f0d5-49d3-a00b-9ca4a2be72e7)
+![Captura de tela de 2024-01-21 12-18-36](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/182397f0-9adf-4dec-91cf-d3f24bf91428)
+![Captura de tela de 2024-01-21 12-21-22](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/b299253d-158b-49d4-ad1b-a4f551dc0c27)
+![Captura de tela de 2024-01-21 12-20-13](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/bced974d-2e69-4a34-bd2b-44f6ac30e877)
+
+
 ### Jacoco
 #### *To run Jacoco  --->>    mvn clean test jacoco:report*
 ![Captura de tela de 2024-01-12 22-34-24](https://github.com/JoelMaciel/Service-Order-System-Backend/assets/77079093/64b69f09-6d23-409e-a996-1c78159126e8)
